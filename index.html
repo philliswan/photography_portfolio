@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Portfolio | Minimalist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #777777;
+            --border-color: #eeeeee;
+            --spacing: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, .editorial-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        header {
+            padding: 4rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--text-color);
+        }
+
+        /* Page Content Switching */
+        .page {
+            display: none;
+            padding: 4rem 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Editorial & Grid Layout */
+        .editorial-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: start;
+        }
+
+        .editorial-blurb {
+            position: sticky;
+            top: 150px;
+        }
+
+        .editorial-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .editorial-text {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.03);
+            filter: grayscale(0%);
+        }
+
+        .photo-item.wide {
+            grid-column: span 2;
+        }
+
+        /* About Page */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 2px;
+        }
+
+        /* Contact Page */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            margin-top: 3rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            font-family: inherit;
+            outline: none;
+        }
+
+        .contact-form button {
+            padding: 1rem;
+            background: var(--text-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: opacity 0.3s;
+        }
+
+        .contact-form button:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .editorial-section, .about-content {
+                grid-template-columns: 1fr;
+            }
+            .editorial-blurb {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            header {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">ELARA VANCE</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="portraits">Portraits</a></li>
+                    <li><a href="#" class="nav-link" data-page="graduation">Graduation</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About me</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Portraits Page -->
+            <section id="portraits" class="page active">
+                <div class="editorial-section">
+                    <div class="editorial-blurb">
+                        <h2 class="editorial-title">The Human Essence</h2>
+                        <p class="editorial-text">Capturing the quiet moments between breaths. My portrait work focuses on natural light and the raw, unscripted emotions of my subjects.</p>
+                        <p class="editorial-text"><i>2023 Collection — Shot on 35mm.</i></p>
+                    </div>
+                    <div class="photo-grid">
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                        <div class="photo-item wide"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&q=80" alt="Portrait Wide"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Graduation Page -->
+            <section id="graduation" class="page">
+                <div class="editorial-section">
+                    <div class="editorial-blurb">
+                        <h2 class="editorial-title">New Horizons</h2>
+                        <p class="editorial-text">Celebrating the end of one chapter and the exciting uncertainty of the next. Graduation is more than a ceremony; it's a milestone of resilience.</p>
+                        <p class="editorial-text"><i>Class of 2024 — University Series.</i></p>
+                    </div>
+                    <div class="photo-grid">
+                        <div class="photo-item wide"><img src="https://images.unsplash.com/photo-1523050853021-db9e139d82a1?auto=format&fit=crop&w=1200&q=80" alt="Graduation"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1541339907198-e08756eaa539?auto=format&fit=crop&w=800&q=80" alt="Graduation"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1525921429573-059ba89d164b?auto=format&fit=crop&w=800&q=80" alt="Graduation"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1627556704302-624285497823?auto=format&fit=crop&w=800&q=80" alt="Graduation"></div>
+                        <div class="photo-item"><img src="https://images.unsplash.com/photo-1535982330050-f1c2bb79ff78?auto=format&fit=crop&w=800&q=80" alt="Graduation"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Page -->
+            <section id="about" class="page">
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80" alt="Photographer">
+                    </div>
+                    <div class="about-text">
+                        <h2 class="editorial-title">Elara Vance</h2>
+                        <p class="editorial-text">Based in San Francisco, I am a visual storyteller specializing in editorial portraiture and lifestyle photography.</p>
+                        <p class="editorial-text">My approach is simple: observe more, intervene less. I believe the best photographs are those where the subject feels completely at ease in their environment.</p>
+                        <p class="editorial-text">When I’m not behind the lens, you’ll find me exploring coastal trails or hunting for rare vinyl records.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Page -->
+            <section id="contact" class="page">
+                <div class="contact-content">
+                    <h2 class="editorial-title">Let's Create Together</h2>
+                    <p class="editorial-text">Currently booking for Summer 2024. Reach out for collaborations or private sessions.</p>
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent (this is a demo)!');">
+                        <input type="text" placeholder="Name" required>
+                        <input type="email" placeholder="Email" required>
+                        <textarea rows="5" placeholder="Tell me about your project" required></textarea>
+                        <button type="submit">Send Inquiry</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Elara Vance Photography. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple Single-Page Navigation Logic
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Get target page ID
+                const targetId = link.getAttribute('data-page');
+
+                // Update Active Link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Show/Hide Pages
+                pages.forEach(page => {
+                    if (page.id === targetId) {
+                        page.classList.add('active');
+                        window.scrollTo(0, 0);
+                    } else {
+                        page.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
