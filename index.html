@@ -6,7 +6,6 @@
     <title>phillyy | portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fonts for the dynamic effect and main theme -->
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&family=Playfair+Display:ital@0;1&family=Courier+Prime&family=Libre+Baskerville:ital@0;1&family=Lora:ital@0;1&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,7 +13,7 @@
             --text-main: #444444; /* Lighter shade of black */
             --text-accent: #777777;
             --adobe-red: #fa0f00;
-            --phillis-blue: #005b96; /* Darker blue color */
+            --phillis-blue: #73C2BE; /* Soft pastel turquoise blue */
             --border-color: #eeeeee;
             --nav-font: 'EB Garamond', serif;
         }
@@ -124,7 +123,6 @@
             display: inline-block;
             text-align: right;
             min-width: 120px; /* Ensures phillyy stays in place regardless of font width */
-            font-weight: 400;
         }
 
         .static-name {
@@ -248,7 +246,6 @@
         </header>
 
         <main>
-            <!-- HELLO PAGE -->
             <section id="hello" class="page active">
                 <div class="hero-banner">
                     <video class="hero-video" autoplay muted loop playsinline>
@@ -271,7 +268,6 @@
 
                 <div class="bio-section">
                     <div class="bio-image">
-                        <!-- Vertical Portrait Placeholder -->
                         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Portrait of Phillis">
                     </div>
                     <div class="bio-text">
@@ -282,7 +278,81 @@
                 </div>
             </section>
 
-            <!-- GRADUATION PAGE -->
             <section id="graduation" class="page">
                 <h2 style="font-weight: 400; margin-bottom: 1rem;">Graduation</h2>
-                <p style="color: var(--text-accent); margin-bottom: 2rem;">A celebration of tran
+                <p style="color: var(--text-accent); margin-bottom: 2rem;">A celebration of transitions and new chapters.</p>
+                <div class="photo-grid">
+                    <div class="photo-item"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80" alt="Grad"></div>
+                    <div class="photo-item"><img src="https://images.unsplash.com/photo-1541339907198-e08756eaa539?auto=format&fit=crop&w=800&q=80" alt="Grad"></div>
+                    <div class="photo-item wide"><img src="https://images.unsplash.com/photo-1523050853021-db9e139d82a1?auto=format&fit=crop&w=1200&q=80" alt="Grad"></div>
+                </div>
+            </section>
+
+            <section id="portraits" class="page">
+                <h2 style="font-weight: 400; margin-bottom: 1rem;">Portraits</h2>
+                <p style="color: var(--text-accent); margin-bottom: 2rem;">Capturing the raw essence of personality.</p>
+                <div class="photo-grid">
+                    <div class="photo-item wide"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=80" alt="Portrait"></div>
+                    <div class="photo-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                    <div class="photo-item"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Portrait"></div>
+                </div>
+            </section>
+
+            <section id="bookings" class="page">
+                <div style="text-align: center;">
+                    <h2 style="font-weight: 400;">Bookings</h2>
+                    <p>Interested in a shoot? Drop me a message below.</p>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent!');">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea rows="6" placeholder="Project details..." required></textarea>
+                    <button type="submit">Submit Request</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 phillyy. just traversing through the universe.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-page');
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                pages.forEach(p => p.classList.toggle('active', p.id === target));
+                window.scrollTo(0,0);
+            });
+        });
+
+        // --- Fixed Dynamic Font Logic for "captured by" ---
+        const prefixElement = document.getElementById('dynamic-prefix');
+        const fonts = [
+            { family: "'EB Garamond', serif", style: "normal", weight: "400" },
+            { family: "'Playfair Display', serif", style: "italic", weight: "400" },
+            { family: "'Courier Prime', monospace", style: "italic", weight: "400" },
+            { family: "'Inter', sans-serif", style: "normal", weight: "300" },
+            { family: "'Libre Baskerville', serif", style: "italic", weight: "400" },
+            { family: "'Lora', serif", style: "italic", weight: "400" }
+        ];
+        let fontIndex = 0;
+
+        setInterval(() => {
+            const currentFont = fonts[fontIndex];
+            prefixElement.style.family = currentFont.family; /* Fallback support */
+            prefixElement.style.fontFamily = currentFont.family;
+            prefixElement.style.fontStyle = currentFont.style;
+            prefixElement.style.fontWeight = currentFont.weight;
+            fontIndex = (fontIndex + 1) % fonts.length;
+        }, 500);
+    </script>
+</body>
+</html>
