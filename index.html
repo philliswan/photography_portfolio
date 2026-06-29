@@ -222,7 +222,6 @@
 
   .grid img:hover { transform: scale(1.015); filter: brightness(0.95); }
 
-  /* ---------- CHAPTER GRID (PORTRAITS) ---------- */
   /* ---------- CHAPTER GRID (LANDSCAPE) ---------- */
 .chapter-grid {
   display: grid;
@@ -386,6 +385,23 @@
   .grid { grid-template-columns: 1fr; }
   .chapter-grid { grid-template-columns: 1fr; }
   .chapter-detail .grid { grid-template-columns: 1fr; }
+}
+
+/* FORCE LANDSCAPE — paste at bottom of <style> */
+.chapter-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.chapter-card .cover,
+.chapter-detail .grid img {
+  aspect-ratio: 3 / 2 !important;
+  width: 100% !important;
+  height: auto !important;     /* let aspect-ratio control height */
+  object-fit: cover !important;
+}
+
+.chapter-detail .grid {
+  grid-template-columns: repeat(2, 1fr) !important;
 }
 </style>
 </head>
