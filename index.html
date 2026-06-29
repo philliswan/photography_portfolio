@@ -403,6 +403,49 @@
 .chapter-detail .grid {
   grid-template-columns: repeat(2, 1fr) !important;
 }
+
+/* ---------- CARD AS A REAL BOX ---------- */
+.chapter-card {
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  overflow: hidden;          /* keeps the image corners rounded inside the box */
+  background: #fff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+/* image sits flush at the top of the box, landscape */
+.chapter-card .cover {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 0;          /* corners handled by the box's overflow:hidden */
+  display: block;
+}
+
+/* the text/title area inside the box */
+.chapter-card .card-body,
+.chapter-card .caption,
+.chapter-card h3,
+.chapter-card p {
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+}
+
+.chapter-card h3 {
+  margin-top: 1rem;
+}
+
+.chapter-card p {
+  margin-bottom: 1.1rem;
+  color: #555;
+}
 </style>
 </head>
 <body>
