@@ -8,726 +8,758 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --text-dark: #1a1a1a;
-    --text-muted: #777;
-    --pastel-blue: #4a6fa5;
-    --accent-red: #e23636;
-    --border-light: #ececec;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'EB Garamond', Georgia, serif;
-    background: #ffffff;
-    color: var(--text-dark);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cg stroke='%23ffffff' stroke-width='4'%3E%3Cpolygon points='12,6 28,6 36,20 28,34 12,34 4,20'/%3E%3Cline x1='14' y1='9' x2='26' y2='9'/%3E%3Cline x1='29.5' y1='19' x2='23.5' y2='29.4'/%3E%3Cline x1='16.5' y1='29.4' x2='10.5' y2='19'/%3E%3C/g%3E%3Cg stroke='%231a1a1a' stroke-width='2'%3E%3Cpolygon points='12,6 28,6 36,20 28,34 12,34 4,20'/%3E%3Cline x1='14' y1='9' x2='26' y2='9'/%3E%3Cline x1='29.5' y1='19' x2='23.5' y2='29.4'/%3E%3Cline x1='16.5' y1='29.4' x2='10.5' y2='19'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") 20 20, auto !important;
-  }
-
-  /* ---------- NAV ---------- */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: flex-end;
-    gap: 2.5rem;
-    padding: 1.4rem 2.5rem;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border-light);
-  }
-
-  nav a {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-size: 1.05rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: opacity 0.25s ease;
-    padding-bottom: 2px;
-    border-bottom: 1px solid transparent;
-  }
-
-  nav a:hover { opacity: 0.55; }
-  nav a.active { border-bottom: 1px solid var(--text-dark); }
-
-  /* ---------- PAGE HANDLING ---------- */
-  .page { display: none; }
-  .page.active { display: block; animation: fade 0.5s ease; }
-
-  @keyframes fade {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ---------- BANNER ---------- */
-  .banner {
-    position: relative;
-    width: 100%;
-    height: 78vh;
-    min-height: 480px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .banner-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    text-align: center;
-    width: 100%;
-    padding: 0 1rem;
-    color: #fff;
-  }
-
-  .title-line { display: inline-block; color: #fff; }
-
-  .super {
-    font-size: 1.6rem;
-    vertical-align: super;
-    margin-right: 0.3rem;
-    color: #fff;
-  }
-
-  .philly {
-    font-size: clamp(3rem, 9vw, 7rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    font-family: 'EB Garamond', Georgia, serif;
-  }
-
-  .subtitle {
-    margin-top: 1.5rem;
-    font-size: 1.15rem;
-    color: #fff;
-    letter-spacing: 0.02em;
-  }
-
-  .subtitle .adobe { color: var(--accent-red); font-weight: 600; }
-
-  .welcome {
-    margin-top: 2.8rem;
-    font-size: 1.1rem;
-    color: #fff;
-    line-height: 1.9;
-    font-style: italic;
-  }
-
-  /* ---------- INTRO ---------- */
-  .intro {
-    display: flex;
-    gap: 4rem;
-    max-width: 1100px;
-    margin: 6rem auto;
-    padding: 0 2.5rem;
-    align-items: center;
-  }
-
-  .intro img {
-    width: 42%;
-    max-width: 420px;
-    object-fit: cover;
-    border-radius: 2px;
-  }
-
-  .intro-text {
-    flex: 1;
-    font-size: 1.2rem;
-    color: #2a2a2a;
-    line-height: 1.85;
-  }
-
-  .intro-text p { margin-bottom: 1.2rem; }
-  .intro-text .name { color: var(--pastel-blue); font-weight: 600; }
-
-  /* ---------- GALLERY SECTIONS ---------- */
-  .gallery-wrap {
-    max-width: 1200px;
-    margin: 5rem auto;
-    padding: 0 2.5rem;
-  }
-
-  .gallery-header {
-    max-width: 680px;
-    margin-bottom: 3rem;
-  }
-
-  .gallery-header h1 {
-    font-size: 2.6rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    letter-spacing: -0.01em;
-  }
-
-  .gallery-header p {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-
-  /* ---------- TIMELINE ---------- */
-  .timeline {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1rem 0 3rem;
-    /* two columns with the center line running between them */
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 3rem;      /* space on either side of the center line */
-    align-items: start;
-  }
-
-  /* vertical center line */
-  .timeline::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: #d8d8d8;
-    transform: translateX(-50%);
-    z-index: 0;
-  }
-
-  /* When a chapter is being hovered, blur everything else */
-  .timeline.dimmed .chapter-card:not(:hover) { filter: blur(3px); opacity: 0.55; }
-  .timeline.dimmed::before { opacity: 0.4; }
-
-  .chapter-card {
-    position: relative;
-    grid-column: 1;
-    /* gap between SAME-SIDE cards = 1/2 image height.
-       Two stacked same-side cards are 2 rows apart in the grid,
-       so the row-to-row margin needs to account for the interleaved
-       opposite-side card. See JS: --same-side-gap is set dynamically. */
-    margin-bottom: var(--same-side-gap, -3.5rem);
-    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
-    z-index: 1;
-  }
-
-  .chapter-card.right {
-    grid-column: 2;
-    margin-top: var(--stagger-offset, 7rem);
-  }
+ :root {
+   --text-dark: #1a1a1a;
+   --text-muted: #777;
+   --pastel-blue: #4a6fa5;
+   --accent-red: #e23636;
+   --border-light: #ececec;
+ }
 
 
-  .chapter-card.left { grid-column: 1; }
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
 
-  /* the dot on the timeline */
-  .chapter-card::after {
-    content: "";
-    position: absolute;
-    top: 1.4rem;
-    width: 16px;
-    height: 16px;
-    background: #dce6f2;
-    border: 2px solid var(--pastel-blue);
-    border-radius: 50%;
-    z-index: 3;
-  }
-  .chapter-card.left::after  { right: -1.5rem; transform: translateX(50%); }
-  .chapter-card.right::after { left: -1.5rem;  transform: translateX(-50%); }
 
-  .chapter-card .cover {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #e2e2e2;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.4s ease, filter 0.4s ease;
-  }
+ body {
+   font-family: 'EB Garamond', Georgia, serif;
+   background: #ffffff;
+   color: var(--text-dark);
+   line-height: 1.6;
+   -webkit-font-smoothing: antialiased;
+   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cg stroke='%23ffffff' stroke-width='4'%3E%3Cpolygon points='12,6 28,6 36,20 28,34 12,34 4,20'/%3E%3Cline x1='14' y1='9' x2='26' y2='9'/%3E%3Cline x1='29.5' y1='19' x2='23.5' y2='29.4'/%3E%3Cline x1='16.5' y1='29.4' x2='10.5' y2='19'/%3E%3C/g%3E%3Cg stroke='%231a1a1a' stroke-width='2'%3E%3Cpolygon points='12,6 28,6 36,20 28,34 12,34 4,20'/%3E%3Cline x1='14' y1='9' x2='26' y2='9'/%3E%3Cline x1='29.5' y1='19' x2='23.5' y2='29.4'/%3E%3Cline x1='16.5' y1='29.4' x2='10.5' y2='19'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") 20 20, auto !important;
+ }
 
-  /* (a) image expands slightly on hover */
-  .chapter-card:hover { z-index: 5; }
-  .chapter-card:hover .cover {
-    transform: scale(1.06);
-    filter: brightness(0.97);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-  }
 
-  /* (b) info label — hidden by default, on the OPPOSITE side of the image */
-  .chapter-meta {
-    position: absolute;
-    top: 1.1rem;
-    width: max-content;
-    max-width: 15rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    z-index: 6;
-  }
-  /* left image -> label appears to its RIGHT (across the line) */
-  .chapter-card.left .chapter-meta {
-    left: 100%;
-    margin-left: 3.2rem;
-    text-align: left;
-    transform: translateX(-8px);
-  }
-  /* right image -> label appears to its LEFT (across the line) */
-  .chapter-card.right .chapter-meta {
-    right: 100%;
-    margin-right: 3.2rem;
-    text-align: right;
-    transform: translateX(8px);
-  }
+ /* ---------- NAV ---------- */
+ nav {
+   position: sticky;
+   top: 0;
+   z-index: 100;
+   display: flex;
+   justify-content: flex-end;
+   gap: 2.5rem;
+   padding: 1.4rem 2.5rem;
+   background: rgba(255, 255, 255, 0.92);
+   backdrop-filter: blur(8px);
+   border-bottom: 1px solid var(--border-light);
+ }
 
-  .chapter-card:hover .chapter-meta {
-    opacity: 1;
-    transform: translateX(0);
-  }
 
-  .chapter-date {
-    font-size: 0.85rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.3rem;
-  }
-  .chapter-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.35rem;
-    color: var(--text-dark);
-  }
-  .chapter-caption {
-    font-size: 1.05rem;
-    font-style: italic;
-    color: #555;
-    line-height: 1.5;
-  }
+ nav a {
+   text-decoration: none;
+   color: var(--text-dark);
+   font-size: 1.05rem;
+   letter-spacing: 0.04em;
+   cursor: pointer;
+   transition: opacity 0.25s ease;
+   padding-bottom: 2px;
+   border-bottom: 1px solid transparent;
+ }
 
-  /* ---------- GRID (graduation + chapter detail) ---------- */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-  }
 
-  .grid img {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    border-radius: 2px;
-    transition: transform 0.4s ease, filter 0.4s ease;
-    cursor: pointer;
-  }
+ nav a:hover { opacity: 0.55; }
+ nav a.active { border-bottom: 1px solid var(--text-dark); }
 
-  .grid img:hover { transform: scale(1.015); filter: brightness(0.95); }
 
-  .chapter-detail .grid { grid-template-columns: repeat(2, 1fr); }
-  .chapter-detail .grid img { aspect-ratio: 3 / 2; }
+ /* ---------- PAGE HANDLING ---------- */
+ .page { display: none; }
+ .page.active { display: block; animation: fade 0.5s ease; }
 
-  /* ---------- CHAPTER DETAIL SUBPAGE ---------- */
-  .chapter-detail { display: none; }
-  .chapter-detail.active { display: block; animation: fade 0.5s ease; }
 
-  .back-link {
-    display: inline-block;
-    margin-bottom: 2rem;
-    font-size: 1.05rem;
-    color: var(--text-dark);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: opacity 0.25s ease;
-  }
-  .back-link:hover { opacity: 0.55; }
+ @keyframes fade {
+   from { opacity: 0; transform: translateY(8px); }
+   to { opacity: 1; transform: translateY(0); }
+ }
 
-  /* ---------- BOOKINGS ---------- */
-  .bookings {
-    max-width: 640px;
-    margin: 6rem auto;
-    padding: 0 2.5rem;
-  }
 
-  .bookings h1 { font-size: 2.6rem; font-weight: 600; margin-bottom: 1.2rem; }
-  .bookings p { color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.8; font-size: 1.15rem; }
-  .bookings form { display: flex; flex-direction: column; gap: 1.2rem; }
-  .bookings label { font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; color: #555; margin-bottom: 0.3rem; display: block; }
+ /* ---------- BANNER ---------- */
+ .banner {
+   position: relative;
+   width: 100%;
+   height: 78vh;
+   min-height: 480px;
+   overflow: hidden;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
 
-  .bookings input,
-  .bookings textarea,
-  .bookings select {
-    width: 100%;
-    padding: 0.8rem 0.9rem;
-    border: 1px solid var(--border-light);
-    border-radius: 2px;
-    font-family: inherit;
-    font-size: 1.05rem;
-    background: #fafafa;
-    transition: border 0.25s ease;
-  }
 
-  .bookings input:focus,
-  .bookings textarea:focus,
-  .bookings select:focus { outline: none; border-color: #bbb; background: #fff; }
-  .bookings textarea { resize: vertical; min-height: 120px; }
+ .banner img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
 
-  .bookings button {
-    margin-top: 0.5rem;
-    padding: 0.9rem;
-    background: #1a1a1a;
-    color: #fff;
-    border: none;
-    border-radius: 2px;
-    font-size: 1.05rem;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: opacity 0.25s ease;
-    font-family: inherit;
-  }
 
-  .bookings button:hover { opacity: 0.8; }
+ .banner-text {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 2;
+   text-align: center;
+   width: 100%;
+   padding: 0 1rem;
+   color: #fff;
+ }
 
-  footer {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #aaa;
-    font-size: 0.95rem;
-    border-top: 1px solid var(--border-light);
-    margin-top: 4rem;
-  }
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 768px) {
-    nav { gap: 1.3rem; padding: 1rem 1.3rem; flex-wrap: wrap; justify-content: flex-end; }
-    .intro { flex-direction: column; gap: 2rem; margin: 3.5rem auto; }
-    .intro img { width: 100%; max-width: 100%; }
-    .grid { grid-template-columns: repeat(2, 1fr); }
-    .philly { letter-spacing: -0.01em; }
+ .title-line { display: inline-block; color: #fff; }
 
-    /* timeline stacks into one column on mobile */
-    .timeline {
-      grid-template-columns: 1fr;
-      column-gap: 0;
-    }
-    .timeline::before { left: 20px; }
-    .chapter-card,
-    .chapter-card.left,
-    .chapter-card.right {
-      grid-column: 1;
-      margin-top: 0;
-      margin-bottom: 2rem;
-      padding-left: 3.5rem;
-    }
-    .chapter-card.left::after,
-    .chapter-card.right::after {
-      left: 12px; right: auto; transform: none;
-    }
-    /* On mobile, just show info below (no fancy side reveal) */
-    .chapter-meta {
-      position: static;
-      opacity: 1 !important;
-      max-width: none;
-      margin: 0.7rem 0 0 3.5rem !important;
-      text-align: left !important;
-      transform: none !important;
-      pointer-events: auto;
-    }
-    .timeline.dimmed .chapter-card:not(:hover) { filter: none; opacity: 1; }
-  }
 
-  @media (max-width: 480px) {
-    .grid { grid-template-columns: 1fr; }
-    .chapter-detail .grid { grid-template-columns: 1fr; }
-  }
+ .super {
+   font-size: 1.6rem;
+   vertical-align: super;
+   margin-right: 0.3rem;
+   color: #fff;
+ }
+
+
+ .philly {
+   font-size: clamp(3rem, 9vw, 7rem);
+   font-weight: 700;
+   letter-spacing: -0.02em;
+   font-family: 'EB Garamond', Georgia, serif;
+ }
+
+
+ .subtitle {
+   margin-top: 1.5rem;
+   font-size: 1.15rem;
+   color: #fff;
+   letter-spacing: 0.02em;
+ }
+
+
+ .subtitle .adobe { color: var(--accent-red); font-weight: 600; }
+
+
+ .welcome {
+   margin-top: 2.8rem;
+   font-size: 1.1rem;
+   color: #fff;
+   line-height: 1.9;
+   font-style: italic;
+ }
+
+
+ /* ---------- INTRO ---------- */
+ .intro {
+   display: flex;
+   gap: 4rem;
+   max-width: 1100px;
+   margin: 6rem auto;
+   padding: 0 2.5rem;
+   align-items: center;
+ }
+
+
+ .intro img {
+   width: 42%;
+   max-width: 420px;
+   object-fit: cover;
+   border-radius: 2px;
+ }
+
+
+ .intro-text {
+   flex: 1;
+   font-size: 1.2rem;
+   color: #2a2a2a;
+   line-height: 1.85;
+ }
+
+
+ .intro-text p { margin-bottom: 1.2rem; }
+ .intro-text .name { color: var(--pastel-blue); font-weight: 600; }
+
+
+ /* ---------- GALLERY SECTIONS ---------- */
+ .gallery-wrap {
+   max-width: 1200px;
+   margin: 5rem auto;
+   padding: 0 2.5rem;
+ }
+
+
+ .gallery-header {
+   max-width: 680px;
+   margin-bottom: 3rem;
+ }
+
+
+ .gallery-header h1 {
+   font-size: 2.6rem;
+   font-weight: 600;
+   margin-bottom: 1rem;
+   letter-spacing: -0.01em;
+ }
+
+
+ .gallery-header p {
+   font-size: 1.15rem;
+   color: var(--text-muted);
+   line-height: 1.8;
+ }
+
+
+ /* ---------- TIMELINE ---------- */
+ .timeline {
+   position: relative;
+   max-width: 1000px;
+   margin: 0 auto;
+   padding: 1rem 0 3rem;
+   /* two columns with the center line running between them */
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   column-gap: 3rem;      /* space on either side of the center line */
+   align-items: start;
+ }
+
+
+ /* vertical center line */
+ .timeline::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 50%;
+   width: 2px;
+   background: #d8d8d8;
+   transform: translateX(-50%);
+   z-index: 0;
+ }
+
+
+ /* When a chapter is being hovered, blur everything else */
+ .timeline.dimmed .chapter-card:not(:hover) { filter: blur(3px); opacity: 0.55; }
+ .timeline.dimmed::before { opacity: 0.4; }
+
+
+ .chapter-card {
+   position: relative;
+   grid-column: 1;               /* default left */
+   margin-bottom: -3.5rem;       /* NEGATIVE margin => tight stagger overlap */
+   transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+   z-index: 1;
+ }
+
+
+ /* even (2nd, 4th...) cards go to right column and are pushed DOWN to stagger */
+ .chapter-card.right {
+   grid-column: 2;
+   margin-top: 7rem;             /* offset so it starts ~halfway down the left one */
+ }
+ .chapter-card.left { grid-column: 1; }
+
+
+ /* the dot on the timeline */
+ .chapter-card::after {
+   content: "";
+   position: absolute;
+   top: 1.4rem;
+   width: 16px;
+   height: 16px;
+   background: #dce6f2;
+   border: 2px solid var(--pastel-blue);
+   border-radius: 50%;
+   z-index: 3;
+ }
+ .chapter-card.left::after  { right: -1.5rem; transform: translateX(50%); }
+ .chapter-card.right::after { left: -1.5rem;  transform: translateX(-50%); }
+
+
+ .chapter-card .cover {
+   width: 100%;
+   aspect-ratio: 3 / 2;
+   object-fit: cover;
+   border-radius: 4px;
+   border: 1px solid #e2e2e2;
+   display: block;
+   cursor: pointer;
+   transition: transform 0.4s ease, filter 0.4s ease;
+ }
+
+
+ /* (a) image expands slightly on hover */
+ .chapter-card:hover { z-index: 5; }
+ .chapter-card:hover .cover {
+   transform: scale(1.06);
+   filter: brightness(0.97);
+   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+ }
+
+
+ /* (b) info label — hidden by default, on the OPPOSITE side of the image */
+ .chapter-meta {
+   position: absolute;
+   top: 1.1rem;
+   width: max-content;
+   max-width: 15rem;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.35s ease, transform 0.35s ease;
+   z-index: 6;
+ }
+ /* left image -> label appears to its RIGHT (across the line) */
+ .chapter-card.left .chapter-meta {
+   left: 100%;
+   margin-left: 3.2rem;
+   text-align: left;
+   transform: translateX(-8px);
+ }
+ /* right image -> label appears to its LEFT (across the line) */
+ .chapter-card.right .chapter-meta {
+   right: 100%;
+   margin-right: 3.2rem;
+   text-align: right;
+   transform: translateX(8px);
+ }
+
+
+ .chapter-card:hover .chapter-meta {
+   opacity: 1;
+   transform: translateX(0);
+ }
+
+
+ .chapter-date {
+   font-size: 0.85rem;
+   letter-spacing: 0.06em;
+   text-transform: uppercase;
+   color: var(--text-muted);
+   margin-bottom: 0.3rem;
+ }
+ .chapter-title {
+   font-size: 1.5rem;
+   font-weight: 600;
+   letter-spacing: -0.01em;
+   margin-bottom: 0.35rem;
+   color: var(--text-dark);
+ }
+ .chapter-caption {
+   font-size: 1.05rem;
+   font-style: italic;
+   color: #555;
+   line-height: 1.5;
+ }
+
+
+ /* ---------- GRID (graduation + chapter detail) ---------- */
+ .grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 1.2rem;
+ }
+
+
+ .grid img {
+   width: 100%;
+   height: 100%;
+   aspect-ratio: 3 / 4;
+   object-fit: cover;
+   border-radius: 2px;
+   transition: transform 0.4s ease, filter 0.4s ease;
+   cursor: pointer;
+ }
+
+
+ .grid img:hover { transform: scale(1.015); filter: brightness(0.95); }
+
+
+ .chapter-detail .grid { grid-template-columns: repeat(2, 1fr); }
+ .chapter-detail .grid img { aspect-ratio: 3 / 2; }
+
+
+ /* ---------- CHAPTER DETAIL SUBPAGE ---------- */
+ .chapter-detail { display: none; }
+ .chapter-detail.active { display: block; animation: fade 0.5s ease; }
+
+
+ .back-link {
+   display: inline-block;
+   margin-bottom: 2rem;
+   font-size: 1.05rem;
+   color: var(--text-dark);
+   text-decoration: none;
+   border-bottom: 1px solid transparent;
+   transition: opacity 0.25s ease;
+ }
+ .back-link:hover { opacity: 0.55; }
+
+
+ /* ---------- BOOKINGS ---------- */
+ .bookings {
+   max-width: 640px;
+   margin: 6rem auto;
+   padding: 0 2.5rem;
+ }
+
+
+ .bookings h1 { font-size: 2.6rem; font-weight: 600; margin-bottom: 1.2rem; }
+ .bookings p { color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.8; font-size: 1.15rem; }
+ .bookings form { display: flex; flex-direction: column; gap: 1.2rem; }
+ .bookings label { font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; color: #555; margin-bottom: 0.3rem; display: block; }
+
+
+ .bookings input,
+ .bookings textarea,
+ .bookings select {
+   width: 100%;
+   padding: 0.8rem 0.9rem;
+   border: 1px solid var(--border-light);
+   border-radius: 2px;
+   font-family: inherit;
+   font-size: 1.05rem;
+   background: #fafafa;
+   transition: border 0.25s ease;
+ }
+
+
+ .bookings input:focus,
+ .bookings textarea:focus,
+ .bookings select:focus { outline: none; border-color: #bbb; background: #fff; }
+ .bookings textarea { resize: vertical; min-height: 120px; }
+
+
+ .bookings button {
+   margin-top: 0.5rem;
+   padding: 0.9rem;
+   background: #1a1a1a;
+   color: #fff;
+   border: none;
+   border-radius: 2px;
+   font-size: 1.05rem;
+   letter-spacing: 0.05em;
+   cursor: pointer;
+   transition: opacity 0.25s ease;
+   font-family: inherit;
+ }
+
+
+ .bookings button:hover { opacity: 0.8; }
+
+
+ footer {
+   text-align: center;
+   padding: 3rem 1rem;
+   color: #aaa;
+   font-size: 0.95rem;
+   border-top: 1px solid var(--border-light);
+   margin-top: 4rem;
+ }
+
+
+ /* ---------- RESPONSIVE ---------- */
+ @media (max-width: 768px) {
+   nav { gap: 1.3rem; padding: 1rem 1.3rem; flex-wrap: wrap; justify-content: flex-end; }
+   .intro { flex-direction: column; gap: 2rem; margin: 3.5rem auto; }
+   .intro img { width: 100%; max-width: 100%; }
+   .grid { grid-template-columns: repeat(2, 1fr); }
+   .philly { letter-spacing: -0.01em; }
+
+
+   /* timeline stacks into one column on mobile */
+   .timeline {
+     grid-template-columns: 1fr;
+     column-gap: 0;
+   }
+   .timeline::before { left: 20px; }
+   .chapter-card,
+   .chapter-card.left,
+   .chapter-card.right {
+     grid-column: 1;
+     margin-top: 0;
+     margin-bottom: 2rem;
+     padding-left: 3.5rem;
+   }
+   .chapter-card.left::after,
+   .chapter-card.right::after {
+     left: 12px; right: auto; transform: none;
+   }
+   /* On mobile, just show info below (no fancy side reveal) */
+   .chapter-meta {
+     position: static;
+     opacity: 1 !important;
+     max-width: none;
+     margin: 0.7rem 0 0 3.5rem !important;
+     text-align: left !important;
+     transform: none !important;
+     pointer-events: auto;
+   }
+   .timeline.dimmed .chapter-card:not(:hover) { filter: none; opacity: 1; }
+ }
+
+
+ @media (max-width: 480px) {
+   .grid { grid-template-columns: 1fr; }
+   .chapter-detail .grid { grid-template-columns: 1fr; }
+ }
 </style>
 </head>
 <body>
 
+
 <nav>
-  <a class="nav-link active" data-page="hello">hello~</a>
-  <a class="nav-link" data-page="portraits">portraits</a>
-  <a class="nav-link" data-page="graduation">graduation</a>
-  <a class="nav-link" data-page="bookings">bookings</a>
+ <a class="nav-link active" data-page="hello">hello~</a>
+ <a class="nav-link" data-page="portraits">portraits</a>
+ <a class="nav-link" data-page="graduation">graduation</a>
+ <a class="nav-link" data-page="bookings">bookings</a>
 </nav>
+
 
 <!-- ============ HELLO PAGE ============ -->
 <section id="hello" class="page active">
-  <div class="banner">
-    <img src="banner1.2.jpg" alt="banner">
-    <div class="banner-text">
-      <div class="title-line">
-        <span class="super" id="superFont">captured by</span><span class="philly">phillyy</span>
-      </div>
-      <div class="subtitle">
-        freelance photographer, berkeley student, <span class="adobe">Adobe</span> creative apprentice
-      </div>
-      <div class="welcome">
-        welcome to my alternate universe<br>
-        take your time, feel free to stay for a while~
-      </div>
-    </div>
-  </div>
+ <div class="banner">
+   <img src="banner1.2.jpg" alt="banner">
+   <div class="banner-text">
+     <div class="title-line">
+       <span class="super" id="superFont">captured by</span><span class="philly">phillyy</span>
+     </div>
+     <div class="subtitle">
+       freelance photographer, berkeley student, <span class="adobe">Adobe</span> creative apprentice
+     </div>
+     <div class="welcome">
+       welcome to my alternate universe<br>
+       take your time, feel free to stay for a while~
+     </div>
+   </div>
+ </div>
 
-  <div class="intro">
-    <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=800&q=80" alt="phillis portrait">
-    <div class="intro-text">
-      <p>hii, my name is <span class="name">phillis</span>!</p>
-      <p>I am originally from suburban philadelphia, but I&apos;m currently a berkeley student studying chemistry <del>unfortunately</del>. I started photography because my roommate really liked the pictures that I took of her :3 </p>
-      <p>since then, I have always enjoyed the process of planning, directing, and executing of a creative vision with other people. Whether it&apos;s documenting a milestone, bonding over silly shenanigans, or celebrating an occasion, I strive to document the genuine and authentic emotions from each moment. I&apos;m always the happiest when my models are happy with the pictures!</p>
-      <p>In this age of AI, let's find a way to create and connect with each other~</p>
-    </div>
-  </div>
+
+ <div class="intro">
+   <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=800&q=80" alt="phillis portrait">
+   <div class="intro-text">
+     <p>hii, my name is <span class="name">phillis</span>!</p>
+     <p>I am originally from suburban philadelphia, but I&apos;m currently a berkeley student studying chemistry <del>unfortunately</del>. I started photography because my roommate really liked the pictures that I took of her :3 </p>
+     <p>since then, I have always enjoyed the process of planning, directing, and executing of a creative vision with other people. Whether it&apos;s documenting a milestone, bonding over silly shenanigans, or celebrating an occasion, I strive to document the genuine and authentic emotions from each moment. I&apos;m always the happiest when my models are happy with the pictures!</p>
+     <p>In this age of AI, let's find a way to create and connect with each other~</p>
+   </div>
+ </div>
 </section>
+
 
 <!-- ============ PORTRAITS PAGE ============ -->
 <section id="portraits" class="page">
-  <div class="gallery-wrap">
+ <div class="gallery-wrap">
 
-    <div class="chapter-overview">
-      <div class="gallery-header">
-        <h1>portraits</h1>
-        <p>you tumbled across my photography journey! grassy waves, sparks of flames, here's how i grew and changed through the lens.</p>
-      </div>
 
-      <div class="timeline">
-        <!-- Chapter cards generated by JS -->
-      </div>
-    </div>
+   <div class="chapter-overview">
+     <div class="gallery-header">
+       <h1>portraits</h1>
+       <p>you tumbled across my photography journey! grassy waves, sparks of flames, here's how i grew and changed through the lens.</p>
+     </div>
 
-    <div class="chapter-detail-container"></div>
 
-  </div>
+     <div class="timeline">
+       <!-- Chapter cards generated by JS -->
+     </div>
+   </div>
+
+
+   <div class="chapter-detail-container"></div>
+
+
+ </div>
 </section>
+
 
 <!-- ============ GRADUATION PAGE ============ -->
 <section id="graduation" class="page">
-  <div class="gallery-wrap">
-    <div class="gallery-header">
-      <h1>graduation</h1>
-      <p>Moments of arrival and farewell — the weight of years held in a single frame. These sessions celebrate the people who made it, captured in golden light and quiet pride.</p>
-    </div>
-    <div class="grid">
-      <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="grad 1">
-      <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?auto=format&fit=crop&w=600&q=80" alt="grad 2">
-      <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=600&q=80" alt="grad 3">
-      <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?auto=format&fit=crop&w=600&q=80" alt="grad 4">
-      <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=600&q=80" alt="grad 5">
-      <img src="https://images.unsplash.com/photo-1622397333309-3056849bc70b?auto=format&fit=crop&w=600&q=80" alt="grad 6">
-    </div>
-  </div>
+ <div class="gallery-wrap">
+   <div class="gallery-header">
+     <h1>graduation</h1>
+     <p>Moments of arrival and farewell — the weight of years held in a single frame. These sessions celebrate the people who made it, captured in golden light and quiet pride.</p>
+   </div>
+   <div class="grid">
+     <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="grad 1">
+     <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?auto=format&fit=crop&w=600&q=80" alt="grad 2">
+     <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=600&q=80" alt="grad 3">
+     <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?auto=format&fit=crop&w=600&q=80" alt="grad 4">
+     <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=600&q=80" alt="grad 5">
+     <img src="https://images.unsplash.com/photo-1622397333309-3056849bc70b?auto=format&fit=crop&w=600&q=80" alt="grad 6">
+   </div>
+ </div>
 </section>
+
 
 <!-- ============ BOOKINGS PAGE ============ -->
 <section id="bookings" class="page">
-  <div class="bookings">
-    <h1>bookings</h1>
-    <p>Have a vision in mind? Let's make it real. Fill out the form below and I'll get back to you to chat about dates, location, and creative direction.</p>
-    <form onsubmit="event.preventDefault(); alert('Thanks! This is a demo form — connect it to a backend or service like Formspree to receive submissions.');">
-      <div>
-        <label>Name</label>
-        <input type="text" placeholder="your name" required>
-      </div>
-      <div>
-        <label>Email</label>
-        <input type="email" placeholder="you@email.com" required>
-      </div>
-      <div>
-        <label>Shoot Type</label>
-        <select>
-          <option>Portraits</option>
-          <option>Graduation</option>
-          <option>Other / Custom</option>
-        </select>
-      </div>
-      <div>
-        <label>Tell me about your idea</label>
-        <textarea placeholder="theme, vibe, location, dates..."></textarea>
-      </div>
-      <button type="submit">send inquiry</button>
-    </form>
-  </div>
+ <div class="bookings">
+   <h1>bookings</h1>
+   <p>Have a vision in mind? Let's make it real. Fill out the form below and I'll get back to you to chat about dates, location, and creative direction.</p>
+   <form onsubmit="event.preventDefault(); alert('Thanks! This is a demo form — connect it to a backend or service like Formspree to receive submissions.');">
+     <div>
+       <label>Name</label>
+       <input type="text" placeholder="your name" required>
+     </div>
+     <div>
+       <label>Email</label>
+       <input type="email" placeholder="you@email.com" required>
+     </div>
+     <div>
+       <label>Shoot Type</label>
+       <select>
+         <option>Portraits</option>
+         <option>Graduation</option>
+         <option>Other / Custom</option>
+       </select>
+     </div>
+     <div>
+       <label>Tell me about your idea</label>
+       <textarea placeholder="theme, vibe, location, dates..."></textarea>
+     </div>
+     <button type="submit">send inquiry</button>
+   </form>
+ </div>
 </section>
 
+
 <footer>
-  © <span id="year"></span> captured by phillyy · berkeley, ca
+ © <span id="year"></span> captured by phillyy · berkeley, ca
 </footer>
 
+
 <script>
-  // ---- Page navigation ----
-  const links = document.querySelectorAll('.nav-link');
-  const pages = document.querySelectorAll('.page');
+ // ---- Page navigation ----
+ const links = document.querySelectorAll('.nav-link');
+ const pages = document.querySelectorAll('.page');
 
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      const target = link.dataset.page;
-      pages.forEach(p => p.classList.remove('active'));
-      links.forEach(l => l.classList.remove('active'));
-      document.getElementById(target).classList.add('active');
-      link.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
 
-  // ---- "captured by" font swapper ----
-  const fonts = [
-    "'Courier New', monospace",
-    "Georgia, serif",
-    "'Brush Script MT', cursive",
-    "'Trebuchet MS', sans-serif",
-    "Impact, sans-serif",
-    "'Palatino Linotype', serif",
-    "'Comic Sans MS', cursive",
-    "Verdana, sans-serif"
-  ];
-  let fi = 0;
-  const superEl = document.getElementById('superFont');
-  setInterval(() => {
-    fi = (fi + 1) % fonts.length;
-    superEl.style.fontFamily = fonts[fi];
-  }, 250);
+ links.forEach(link => {
+   link.addEventListener('click', () => {
+     const target = link.dataset.page;
+     pages.forEach(p => p.classList.remove('active'));
+     links.forEach(l => l.classList.remove('active'));
+     document.getElementById(target).classList.add('active');
+     link.classList.add('active');
+     window.scrollTo({ top: 0, behavior: 'smooth' });
+   });
+ });
 
-  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ---- Portrait chapters data ----
-  const chapters = [
-    { date: "June 2025", title: "Chapter 1", caption: "Sunflowers and ocean.", cover: "chapters/chapcovers/ch1_cover.jpg",
-      photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Feb 2024", title: "Chapter 2", caption: "Escape in the Spring.", cover: "chapters/chapcovers/ch2_cover.jpg",
-      photos: ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Mar 2024", title: "Chapter 3", caption: "Golden hour and quiet smiles.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Apr 2024", title: "Chapter 4", caption: "Grassy waves and open skies.", cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"] },
-    { date: "May 2024", title: "Chapter 5", caption: "Sparks of flame, sparks of feeling.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Jun 2024", title: "Chapter 6", caption: "Learning to see the in-between.", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Jul 2024", title: "Chapter 7", caption: "Summer warmth in every frame.", cover: "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Aug 2024", title: "Chapter 8", caption: "Chasing shadows downtown.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Sep 2024", title: "Chapter 9", caption: "Autumn tones and tender pauses.", cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Oct 2024", title: "Chapter 10", caption: "Crisp air, candid laughter.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Nov 2024", title: "Chapter 11", caption: "Quiet mornings, long exposures.", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Dec 2024", title: "Chapter 12", caption: "Winter light, lingering glow.", cover: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Jan 2025", title: "Chapter 13", caption: "A new year through the lens.", cover: "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Feb 2025", title: "Chapter 14", caption: "Bolder frames, braver choices.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
-    { date: "Mar 2025", title: "Chapter 15", caption: "Still learning, still in love with it.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
-      photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] }
-  ];
+ // ---- "captured by" font swapper ----
+ const fonts = [
+   "'Courier New', monospace",
+   "Georgia, serif",
+   "'Brush Script MT', cursive",
+   "'Trebuchet MS', sans-serif",
+   "Impact, sans-serif",
+   "'Palatino Linotype', serif",
+   "'Comic Sans MS', cursive",
+   "Verdana, sans-serif"
+ ];
+ let fi = 0;
+ const superEl = document.getElementById('superFont');
+ setInterval(() => {
+   fi = (fi + 1) % fonts.length;
+   superEl.style.fontFamily = fonts[fi];
+ }, 250);
 
-  const timeline = document.querySelector('.timeline');
-  const chapterOverview = document.querySelector('.chapter-overview');
-  const detailContainer = document.querySelector('.chapter-detail-container');
 
-  chapters.forEach((ch, i) => {
-    const card = document.createElement('div');
-    card.className = 'chapter-card ' + (i % 2 === 0 ? 'left' : 'right');
-    card.innerHTML = `
-      <img class="cover" src="${ch.cover}" alt="${ch.title} cover">
-      <div class="chapter-meta">
-        <div class="chapter-date">${ch.date}</div>
-        <div class="chapter-title">${ch.title}</div>
-        <div class="chapter-caption">${ch.caption}</div>
-      </div>`;
+ document.getElementById('year').textContent = new Date().getFullYear();
 
-    // (c) blur the rest of the timeline while hovering this card
-    card.addEventListener('mouseenter', () => timeline.classList.add('dimmed'));
-    card.addEventListener('mouseleave', () => timeline.classList.remove('dimmed'));
 
-    // Clicking the cover opens the chapter
-    card.querySelector('.cover').addEventListener('click', () => openChapter(i));
+ // ---- Portrait chapters data ----
+ const chapters = [
+   { date: "June 2025", title: "Chapter 1", caption: "Sunflowers and ocean.", cover: "chapters/chapcovers/ch1_cover.jpg",
+     photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Feb 2024", title: "Chapter 2", caption: "Escape in the Spring.", cover: "chapters/chapcovers/ch2_cover.jpg",
+     photos: ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Mar 2024", title: "Chapter 3", caption: "Golden hour and quiet smiles.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Apr 2024", title: "Chapter 4", caption: "Grassy waves and open skies.", cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"] },
+   { date: "May 2024", title: "Chapter 5", caption: "Sparks of flame, sparks of feeling.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Jun 2024", title: "Chapter 6", caption: "Learning to see the in-between.", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Jul 2024", title: "Chapter 7", caption: "Summer warmth in every frame.", cover: "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Aug 2024", title: "Chapter 8", caption: "Chasing shadows downtown.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Sep 2024", title: "Chapter 9", caption: "Autumn tones and tender pauses.", cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Oct 2024", title: "Chapter 10", caption: "Crisp air, candid laughter.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Nov 2024", title: "Chapter 11", caption: "Quiet mornings, long exposures.", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Dec 2024", title: "Chapter 12", caption: "Winter light, lingering glow.", cover: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Jan 2025", title: "Chapter 13", caption: "A new year through the lens.", cover: "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Feb 2025", title: "Chapter 14", caption: "Bolder frames, braver choices.", cover: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"] },
+   { date: "Mar 2025", title: "Chapter 15", caption: "Still learning, still in love with it.", cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
+     photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] }
+ ];
 
-    timeline.appendChild(card);
-  });
 
-  function openChapter(i) {
-    const ch = chapters[i];
-    chapterOverview.style.display = 'none';
-    detailContainer.innerHTML = `
-      <div class="chapter-detail active">
-        <a class="back-link">← back to chapters</a>
-        <div class="gallery-header">
-          <div class="chapter-date">${ch.date}</div>
-          <h1>${ch.title}</h1>
-          <p>${ch.caption}</p>
-        </div>
-        <div class="grid">
-          ${ch.photos.map(p => `<img src="${p}" alt="${ch.title} photo">`).join('')}
-        </div>
-      </div>`;
-    detailContainer.querySelector('.back-link').addEventListener('click', closeChapter);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+ const timeline = document.querySelector('.timeline');
+ const chapterOverview = document.querySelector('.chapter-overview');
+ const detailContainer = document.querySelector('.chapter-detail-container');
 
-  function closeChapter() {
-    detailContainer.innerHTML = '';
-    chapterOverview.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  document.querySelector('[data-page="portraits"]').addEventListener('click', closeChapter);
+ chapters.forEach((ch, i) => {
+   const card = document.createElement('div');
+   card.className = 'chapter-card ' + (i % 2 === 0 ? 'left' : 'right');
+   card.innerHTML = `
+     <img class="cover" src="${ch.cover}" alt="${ch.title} cover">
+     <div class="chapter-meta">
+       <div class="chapter-date">${ch.date}</div>
+       <div class="chapter-title">${ch.title}</div>
+       <div class="chapter-caption">${ch.caption}</div>
+     </div>`;
 
-// ---- Spacing: same-side vertical gap = 1/2 image height ----
-  function updateTimelineSpacing() {
-    const firstCover = timeline.querySelector('.chapter-card .cover');
-    if (!firstCover) return;
 
-    const imgH = firstCover.getBoundingClientRect().height;
-    if (!imgH) return;
+   // (c) blur the rest of the timeline while hovering this card
+   card.addEventListener('mouseenter', () => timeline.classList.add('dimmed'));
+   card.addEventListener('mouseleave', () => timeline.classList.remove('dimmed'));
 
-    // Cards alternate L/R in a 2-col grid. In grid auto-placement,
-    // consecutive same-side cards are separated by ONE opposite-side
-    // card that occupies the intervening row. The visible vertical
-    // distance from the bottom of one card to the top of the next
-    // same-side card is governed by margin-bottom.
-    //
-    // We want: gap between same-side cards = imgH / 2.
-    // The intervening opposite card has full height (imgH) plus its
-    // own stagger offset, so the negative margin must pull the next
-    // same-side card up by (imgH - imgH/2) = imgH/2 relative to a
-    // naturally stacked layout.
-    const halfImg = imgH / 2;
 
-    // stagger: right column starts halfway down the left image
-    timeline.style.setProperty('--stagger-offset', `${halfImg}px`);
+   // Clicking the cover opens the chapter
+   card.querySelector('.cover').addEventListener('click', () => openChapter(i));
 
-    // negative margin so same-side gap equals half the image height
-    timeline.style.setProperty('--same-side-gap', `-${halfImg}px`);
-  }
 
-  // Apply after images load (heights aren't known until then)
-  window.addEventListener('load', updateTimelineSpacing);
-  window.addEventListener('resize', updateTimelineSpacing);
+   timeline.appendChild(card);
+ });
 
-  // Also recalc once covers have loaded, in case 'load' already fired
-  timeline.querySelectorAll('.cover').forEach(img => {
-    if (img.complete) { updateTimelineSpacing(); }
-    else { img.addEventListener('load', updateTimelineSpacing); }
-  });
 
+ function openChapter(i) {
+   const ch = chapters[i];
+   chapterOverview.style.display = 'none';
+   detailContainer.innerHTML = `
+     <div class="chapter-detail active">
+       <a class="back-link">← back to chapters</a>
+       <div class="gallery-header">
+         <div class="chapter-date">${ch.date}</div>
+         <h1>${ch.title}</h1>
+         <p>${ch.caption}</p>
+       </div>
+       <div class="grid">
+         ${ch.photos.map(p => `<img src="${p}" alt="${ch.title} photo">`).join('')}
+       </div>
+     </div>`;
+   detailContainer.querySelector('.back-link').addEventListener('click', closeChapter);
+   window.scrollTo({ top: 0, behavior: 'smooth' });
+ }
+
+
+ function closeChapter() {
+   detailContainer.innerHTML = '';
+   chapterOverview.style.display = 'block';
+   window.scrollTo({ top: 0, behavior: 'smooth' });
+ }
+
+
+ document.querySelector('[data-page="portraits"]').addEventListener('click', closeChapter);
 </script>
+
 
 </body>
 </html>
