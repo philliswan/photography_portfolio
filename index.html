@@ -69,16 +69,7 @@
   }
 
   /* ---------- BANNER ---------- */
-  .banner-text {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 0 1rem;
-    color: #fff;
-    transform: translateY(18%);
-  }
-
-.banner {
+  .banner {
     position: relative;
     width: 100%;
     height: 78vh;
@@ -89,12 +80,11 @@
     justify-content: center;
   }
 
-  .banner { height: 78vh; min-height: 480px; }
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   .banner-text {
     position: absolute;
@@ -196,58 +186,69 @@
     line-height: 1.8;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem 0 3rem;
   }
 
-  .grid img {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 2px;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-}
+  /* the vertical line down the middle */
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #d8d8d8;
+    transform: translateX(-50%);
+  }
 
-/* landscape grid inside chapter detail pages */
-.chapter-detail .grid {
-  grid-template-columns: repeat(2, 1fr);
-}
-.chapter-detail .grid img {
-  aspect-ratio: 3 / 2;   /* landscape */
-}
+  .chapter-card {
+    position: relative;
+    width: 50%;
+    padding: 0 2.5rem;          /* gap between card and center line */
+    margin-bottom: 2.2rem;      /* keeps vertical spacing tight */
+    box-sizing: border-box;
+  }
 
-  .grid img:hover { transform: scale(1.015); }
+  /* odd chapters on the LEFT, even on the RIGHT (zigzag) */
+  .chapter-card.left  { left: 0;   text-align: right; }
+  .chapter-card.right { left: 50%; text-align: left; }
 
-  /* ---------- CHAPTER GRID (LANDSCAPE) ---------- */
-.chapter-card {
-  position: relative;
-}
-.chapter-card .chapter-num {
-  position: absolute;
-  top: -0.4em;
-  left: 0.3em;
-  font-size: 6rem;
-  font-weight: 700;
-  color: rgba(74,111,165,0.08); /* your pastel blue, very faint */
-  z-index: 0;
-  pointer-events: none;
-}
+  /* the dot on the timeline */
+  .chapter-card::after {
+    content: "";
+    position: absolute;
+    top: 1.4rem;
+    width: 16px;
+    height: 16px;
+    background: #dce6f2;
+    border: 2px solid var(--pastel-blue);
+    border-radius: 50%;
+    z-index: 2;
+  }
+  .chapter-card.left::after  { right: -8px; }   /* sits on the center line */
+  .chapter-card.right::after { left: -8px; }
 
-  /* image now stays fully saturated; only a subtle zoom on hover */
   .chapter-card .cover {
-  transition: transform 0.5s ease;
-}
-.chapter-card:hover .cover {
-  transform: scale(1.03);
-}
-
-  .chapter-meta {
-    padding: 0.9rem 0.1rem 0;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e2e2e2;
+    display: block;
+    transition: filter 0.4s ease, transform 0.4s ease;
+    cursor: pointer;
   }
+  .chapter-card:hover .cover {
+    filter: brightness(0.94);
+    transform: scale(1.015);
+  }
+
+  .chapter-meta { padding: 0.8rem 0.1rem 0; }
 
   .chapter-date {
     font-size: 0.85rem;
@@ -256,19 +257,44 @@
     color: var(--text-muted);
     margin-bottom: 0.3rem;
   }
-
   .chapter-title {
     font-size: 1.35rem;
     font-weight: 600;
     letter-spacing: -0.01em;
     margin-bottom: 0.35rem;
   }
-
   .chapter-caption {
     font-size: 1.02rem;
     font-style: italic;
     color: #555;
     line-height: 1.5;
+  }
+
+  /* ---------- GRID (used by graduation + chapter detail) ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .grid img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    cursor: pointer;
+  }
+
+  .grid img:hover { transform: scale(1.015); filter: brightness(0.95); }
+
+  /* landscape grid inside chapter detail pages */
+  .chapter-detail .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .chapter-detail .grid img {
+    aspect-ratio: 3 / 2;   /* landscape */
   }
 
   /* ---------- CHAPTER DETAIL SUBPAGE ---------- */
@@ -365,155 +391,31 @@
     margin-top: 4rem;
   }
 
-  /* ---------- TIMELINE ---------- */
-  .timeline-wrap {
-    max-width: 1100px;
-    margin: 5rem auto;
-    padding: 0 2.5rem;
-  }
-
-  .timeline {
-    position: relative;
-    margin: 3rem auto 2rem;
-    padding: 2rem 0;
-  }
-
-  /* the center line */
-  .timeline-line {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: var(--border-light);
-    transform: translateX(-50%);
-  }
-
-  /* each item takes half the width and floats to its side */
-  .tl-item {
-    position: relative;
-    width: 50%;
-    padding: 1.5rem 2.5rem;
-    box-sizing: border-box;
-  }
-  .tl-item.left  { left: 0; }
-  .tl-item.right { left: 50%; }
-
-  /* the dot on the center line */
-  .tl-item::after {
-    content: "";
-    position: absolute;
-    top: 2.4rem;
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border: 2px solid var(--pastel-blue);
-    border-radius: 50%;
-    z-index: 2;
-  }
-  .tl-item.left::after  { right: -7px; }
-  .tl-item.right::after { left: -7px; }
-
-  /* the photo card */
-  .tl-card {
-    position: relative;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  }
-  .tl-card img {
-    width: 100%;
-    aspect-ratio: 3 / 2;      /* landscape */
-    object-fit: cover;
-    display: block;
-  }
-
-  /* info overlay — hidden until hover */
-  .tl-info {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.2rem 1.3rem;
-    color: #fff;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-  }
-  .tl-card:hover .tl-info {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .tl-info h3 { margin: 0 0 0.2rem; font-size: 1.15rem; font-weight: 600; }
-  .tl-info .tl-date { font-size: 0.85rem; opacity: 0.85; display: block; margin-bottom: 0.4rem; letter-spacing: 0.04em; }
-  .tl-info p { margin: 0; font-size: 0.95rem; opacity: 0.92; font-style: italic; }
-
   /* ---------- RESPONSIVE ---------- */
-@media (max-width: 768px) {
-  nav { gap: 1.3rem; padding: 1rem 1.3rem; flex-wrap: wrap; justify-content: flex-end; }
-  .intro { flex-direction: column; gap: 2rem; margin: 3.5rem auto; }
-  .intro img { width: 100%; max-width: 100%; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
-  .chapter-grid { grid-template-columns: 1fr; }
-  .philly { letter-spacing: -0.01em; }
+  @media (max-width: 768px) {
+    nav { gap: 1.3rem; padding: 1rem 1.3rem; flex-wrap: wrap; justify-content: flex-end; }
+    .intro { flex-direction: column; gap: 2rem; margin: 3.5rem auto; }
+    .intro img { width: 100%; max-width: 100%; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .philly { letter-spacing: -0.01em; }
 
-  /* timeline collapses to a single left-aligned column */
-  .timeline-line { left: 20px; }
-  .tl-item,
-  .tl-item.right { width: 100%; left: 0; padding-left: 3.5rem; padding-right: 0.5rem; }
-  .tl-item.left::after,
-  .tl-item.right::after { left: 13px; right: auto; }
-}
+    /* timeline stacks into one column */
+    .timeline::before { left: 20px; }
+    .chapter-card {
+      width: 100%;
+      padding-left: 3.5rem;
+      padding-right: 0.5rem;
+      text-align: left !important;
+    }
+    .chapter-card.left, .chapter-card.right { left: 0; }
+    .chapter-card.left::after,
+    .chapter-card.right::after { left: 12px; right: auto; }
+  }
 
-@media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; }
-  .chapter-grid { grid-template-columns: 1fr; }
-  .chapter-detail .grid { grid-template-columns: 1fr; }
-}
-
-/* FORCE LANDSCAPE */
-.chapter-grid {
-  grid-template-columns: repeat(2, 1fr) !important;
-}
-
-.chapter-card .cover,
-.chapter-detail .grid img {
-  aspect-ratio: 3 / 2 !important;
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover !important;
-}
-
-.chapter-detail .grid {
-  grid-template-columns: repeat(2, 1fr) !important;
-}
-
-/* ---------- CARD AS A REAL BOX ---------- */
-.chapter-card {
-  border: 1px solid #e2e2e2;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.chapter-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  transform: translateY(-3px);
-}
-
-.chapter-card .cover {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: 0;
-  display: block;
-}
-
-
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .chapter-detail .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -553,69 +455,30 @@
     </div>
   </div>
 </section>
+
 <!-- ============ PORTRAITS PAGE ============ -->
 <section id="portraits" class="page">
-  <!-- OVERVIEW: chapter cards + timeline -->
-  <div class="chapter-overview">
-    <div class="gallery-wrap">
+  <div class="gallery-wrap">
+
+    <!-- Chapter overview -->
+    <div class="chapter-overview">
       <div class="gallery-header">
         <h1>portraits</h1>
-        <p>Chapters of light and feeling — each session its own little story.</p>
-      </div>
-
-      <!-- chapter cards get injected here by JS -->
-      <div class="grid chapter-grid"></div>
-    </div>
-
-    <!-- ===== TIMELINE (under portraits) ===== -->
-    <div class="timeline-wrap">
-      <div class="gallery-header">
-        <h1>timeline</h1>
-        <p>A look back at how things have unfolded, one frame at a time.</p>
+        <p>come take a look through my lens!</p>
+        <p>grassy waves, sparks of flames, here's how i grew and changed through the lens.</p>
       </div>
 
       <div class="timeline">
-        <div class="timeline-line"></div>
-
-        <div class="tl-item left">
-          <div class="tl-card">
-            <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=800&q=80" alt="">
-            <div class="tl-info">
-              <h3>First shoot</h3>
-              <span class="tl-date">June 2025</span>
-              <p>Sunflowers and ocean.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="tl-item right">
-          <div class="tl-card">
-            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="">
-            <div class="tl-info">
-              <h3>Spring escape</h3>
-              <span class="tl-date">Feb 2024</span>
-              <p>Escape in the Spring.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="tl-item left">
-          <div class="tl-card">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="">
-            <div class="tl-info">
-              <h3>Golden hour</h3>
-              <span class="tl-date">Mar 2024</span>
-              <p>Golden hour and quiet smiles.</p>
-            </div>
-          </div>
-        </div>
+        <!-- Chapter cards generated by JS below -->
       </div>
     </div>
-  </div>
 
-  <!-- chapter detail pages get injected here by JS -->
-  <div class="chapter-detail-container"></div>
+    <!-- Chapter detail subpages get injected here -->
+    <div class="chapter-detail-container"></div>
+
+  </div>
 </section>
+
 <!-- ============ GRADUATION PAGE ============ -->
 <section id="graduation" class="page">
   <div class="gallery-wrap">
@@ -740,13 +603,13 @@
       photos: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"] }
   ];
 
-  const chapterGrid = document.querySelector('.chapter-grid');
+  const chapterGrid = document.querySelector('.timeline');
   const chapterOverview = document.querySelector('.chapter-overview');
   const detailContainer = document.querySelector('.chapter-detail-container');
 
   chapters.forEach((ch, i) => {
     const card = document.createElement('div');
-    card.className = 'chapter-card';
+    card.className = 'chapter-card ' + (i % 2 === 0 ? 'left' : 'right');
     card.innerHTML = `
       <img class="cover" src="${ch.cover}" alt="${ch.title} cover">
       <div class="chapter-meta">
